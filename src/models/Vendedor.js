@@ -30,10 +30,6 @@ const Vendedor = sequelize.define('Vendedor', {
     activo: {
         type: DataTypes.BOOLEAN,
         defaultValue: true
-    },
-    fecha_registro: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
     }
 }, {
     tableName: 'Vendedores',

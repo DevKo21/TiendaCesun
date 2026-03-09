@@ -32,9 +32,9 @@ const Producto = sequelize.define('Producto', {
         defaultValue: true
     },
     fecha_creacion: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
-    }
+    type: DataTypes.DATE,
+    defaultValue: sequelize.literal('GETDATE()')
+}
 }, {
     tableName: 'Productos',
     timestamps: false
