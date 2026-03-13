@@ -18,6 +18,7 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/vendedores', require('./routes/vendedores'));
 app.use('/api/productos', require('./routes/productos'));
 app.use('/api/pedidos', require('./routes/pedidos'));
+app.use('/api/inventario', require('./routes/inventario'));
 
 // Health check
 app.get('/api/health', (req, res) => {
