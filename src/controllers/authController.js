@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { sql, getPool } = require('../config/database');
+const encryption = require('../config/encryption');
 
 const AuthController = {
 
@@ -14,17 +15,15 @@ const AuthController = {
                 .query('SELECT * FROM Vendedores WHERE email = @email');
 
             const vendedor = result.recordset[0];
-            console.log('Vendedor encontrado:', vendedor);
-            console.log('Password recibido:', password);
-            console.log('Password en BD:', vendedor ? vendedor.password_hash : 'no encontrado');
 
             // Verificar si existe el vendedor
             if (!vendedor) {
                 return res.status(401).json({ error: 'Credenciales inválidas' });
             }
 
-            // Verificar contraseña
-            if (vendedor.password_hash !== password) {
+            // Descifrar password y comparar
+            const passwordDescifrado = encryption.decrypt(vendedor.password_hash);
+            if (passwordDescifrado !== password) {
                 return res.status(401).json({ error: 'Credenciales inválidas' });
             }
 
