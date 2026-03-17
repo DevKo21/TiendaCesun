@@ -3,21 +3,25 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const xssProtection = require('./middleware/xssProtection');
 
 const app = express();
 
-// Middleware
+// Middleware de seguridad
 app.use(helmet());
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Protección XSS
+app.use(xssProtection);
+
 // Rutas
-app.use('/api/auth', require('./routes/auth'));
+app.use('/api/auth',       require('./routes/auth'));
 app.use('/api/vendedores', require('./routes/vendedores'));
-app.use('/api/productos', require('./routes/productos'));
-app.use('/api/pedidos', require('./routes/pedidos'));
+app.use('/api/productos',  require('./routes/productos'));
+app.use('/api/pedidos',    require('./routes/pedidos'));
 app.use('/api/inventario', require('./routes/inventario'));
 
 // Health check
